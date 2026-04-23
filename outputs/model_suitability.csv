@@ -1,0 +1,6 @@
+model,suitable,reason
+lagged_linear_regression,yes,Best fit for a small annual sample. Interpretable and directly aligned with the assignment.
+ridge_or_lasso,maybe,"Useful only as a robustness check if you try a slightly larger predictor set. Sample is very small, so gains may be limited."
+regression_tree_random_forest_boosting,no,Too little data. Tree-based models would overfit and give unstable long-horizon results.
+knn,no,Nearest-neighbour methods are weak with such a short annual macro dataset and are hard to interpret economically.
+pcr_pls,maybe,"Could help if you want to compress many macro variables, but that is secondary to a simple lagged OLS model here."

@@ -4,7 +4,7 @@ import csv
 import math
 import os
 from pathlib import Path
-from statistics import mean, median, stdev
+from statistics import mean, median, pstdev, stdev
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -152,6 +152,10 @@ def rmse(actual: list[float], predicted: list[float]) -> float:
 
 def mae(actual: list[float], predicted: list[float]) -> float:
     return sum(abs(a - p) for a, p in zip(actual, predicted)) / len(actual)
+
+
+def next_year_label(start_year: int) -> str:
+    return f"{start_year}-{str(start_year + 1)[-2:]}"
 
 
 def series_svg(path: Path, years: list[int], series: list[tuple[str, list[float], str]], title: str, y_label: str) -> None:
@@ -345,6 +349,125 @@ if forecast_rows:
     )
     forecast_text = f"Using the selected lagged linear regression, the predicted railways real GDP growth for 2024-25 is {forecast_value:.2f}%."
 
+
+hist_goods_growth = [row["goods_earnings_growth"] for row in rows if row.get("goods_earnings_growth") is not None]
+hist_freight_growth = [row["freight_growth"] for row in rows if row.get("freight_growth") is not None]
+baseline_goods_growth = mean(hist_goods_growth[-3:])
+baseline_freight_growth = mean(hist_freight_growth[-3:])
+goods_sd = pstdev(hist_goods_growth)
+freight_sd = pstdev(hist_freight_growth)
+
+scenario_assumptions = {
+    "baseline": {
+        "goods_growth_assumption": baseline_goods_growth,
+        "freight_growth_assumption": baseline_freight_growth,
+    },
+    "optimistic": {
+        "goods_growth_assumption": baseline_goods_growth + 0.5 * goods_sd,
+        "freight_growth_assumption": baseline_freight_growth + 0.5 * freight_sd,
+    },
+    "pessimistic": {
+        "goods_growth_assumption": baseline_goods_growth - 0.5 * goods_sd,
+        "freight_growth_assumption": baseline_freight_growth - 0.5 * freight_sd,
+    },
+}
+
+direct_forecast_row = [row for row in rows if row["year_label"] == "2024-25" and all(row.get(p) is not None for p in best_predictors)][0]
+direct_first_year_forecast = predict_row(direct_forecast_row, full_fit["beta"], best_predictors)
+
+scenario_path_rows = []
+for scenario_name, assumptions in scenario_assumptions.items():
+    prev_growth = direct_first_year_forecast
+    for horizon in range(1, 11):
+        forecast_start_year = 2023 + horizon
+        if horizon == 1:
+            predicted_growth = direct_first_year_forecast
+        else:
+            predicted_growth = (
+                full_fit["beta"][0]
+                + full_fit["beta"][1] * prev_growth
+                + full_fit["beta"][2] * assumptions["goods_growth_assumption"]
+                + full_fit["beta"][3] * assumptions["freight_growth_assumption"]
+            )
+        scenario_path_rows.append(
+            {
+                "scenario": scenario_name,
+                "horizon_years_ahead": horizon,
+                "forecast_year": next_year_label(forecast_start_year),
+                "predicted_real_gdp_growth_of_railways": round(predicted_growth, 6),
+            }
+        )
+        prev_growth = predicted_growth
+
+write_csv(
+    OUTPUT_DIR / "scenario_forecast_path.csv",
+    [
+        "scenario",
+        "horizon_years_ahead",
+        "forecast_year",
+        "predicted_real_gdp_growth_of_railways",
+    ],
+    scenario_path_rows,
+)
+
+baseline_path = [row for row in scenario_path_rows if row["scenario"] == "baseline"]
+horizon_rows = [
+    {
+        "horizon": "short_term_1_year",
+        "forecast_year": baseline_path[0]["forecast_year"],
+        "predicted_real_gdp_growth_of_railways": baseline_path[0]["predicted_real_gdp_growth_of_railways"],
+    },
+    {
+        "horizon": "medium_term_3_year",
+        "forecast_year": baseline_path[2]["forecast_year"],
+        "predicted_real_gdp_growth_of_railways": baseline_path[2]["predicted_real_gdp_growth_of_railways"],
+    },
+    {
+        "horizon": "medium_term_5_year",
+        "forecast_year": baseline_path[4]["forecast_year"],
+        "predicted_real_gdp_growth_of_railways": baseline_path[4]["predicted_real_gdp_growth_of_railways"],
+    },
+    {
+        "horizon": "long_run_10_year",
+        "forecast_year": baseline_path[9]["forecast_year"],
+        "predicted_real_gdp_growth_of_railways": baseline_path[9]["predicted_real_gdp_growth_of_railways"],
+    },
+]
+write_csv(
+    OUTPUT_DIR / "horizon_forecasts.csv",
+    ["horizon", "forecast_year", "predicted_real_gdp_growth_of_railways"],
+    horizon_rows,
+)
+
+model_suitability_rows = [
+    {
+        "model": "lagged_linear_regression",
+        "suitable": "yes",
+        "reason": "Best fit for a small annual sample. Interpretable and directly aligned with the assignment.",
+    },
+    {
+        "model": "ridge_or_lasso",
+        "suitable": "maybe",
+        "reason": "Useful only as a robustness check if you try a slightly larger predictor set. Sample is very small, so gains may be limited.",
+    },
+    {
+        "model": "regression_tree_random_forest_boosting",
+        "suitable": "no",
+        "reason": "Too little data. Tree-based models would overfit and give unstable long-horizon results.",
+    },
+    {
+        "model": "knn",
+        "suitable": "no",
+        "reason": "Nearest-neighbour methods are weak with such a short annual macro dataset and are hard to interpret economically.",
+    },
+    {
+        "model": "pcr_pls",
+        "suitable": "maybe",
+        "reason": "Could help if you want to compress many macro variables, but that is secondary to a simple lagged OLS model here.",
+    },
+]
+write_csv(OUTPUT_DIR / "model_suitability.csv", list(model_suitability_rows[0].keys()), model_suitability_rows)
+
 years = [row["start_year"] for row in rows if row["real_gdp_growth_of_railways"] is not None]
 target_vals = [row["real_gdp_growth_of_railways"] for row in rows if row["real_gdp_growth_of_railways"] is not None]
 freight_vals = [row["freight_growth"] for row in rows if row["real_gdp_growth_of_railways"] is not None]
@@ -394,9 +517,24 @@ report_lines = [
     f"- Adjusted R-squared: {full_fit['adj_r2']:.3f}",
     f"- In-sample RMSE: {metric_rows[0]['in_sample_rmse']:.3f}",
     "",
+    "## Forecast Horizons",
+    "",
+    f"- Short term (1 year, {horizon_rows[0]['forecast_year']}): {horizon_rows[0]['predicted_real_gdp_growth_of_railways']:.2f}%",
+    f"- Medium term (3 years, {horizon_rows[1]['forecast_year']}): {horizon_rows[1]['predicted_real_gdp_growth_of_railways']:.2f}%",
+    f"- Medium term (5 years, {horizon_rows[2]['forecast_year']}): {horizon_rows[2]['predicted_real_gdp_growth_of_railways']:.2f}%",
+    f"- Long run (10 years, {horizon_rows[3]['forecast_year']}): {horizon_rows[3]['predicted_real_gdp_growth_of_railways']:.2f}%",
+    "",
     "## Forecast",
     "",
     forecast_text,
+    "",
+    "Longer-horizon forecasts are generated recursively under a baseline assumption that goods-earnings growth and freight growth stay near their recent 3-year averages. Optimistic and pessimistic scenario paths are also saved in `outputs/scenario_forecast_path.csv`.",
+    "",
+    "## Other Models",
+    "",
+    "- Lagged linear regression should remain the main model.",
+    "- Ridge or Lasso can be added as a robustness check if you want one extra class-friendly comparison.",
+    "- Tree-based models, KNN, and more flexible ML models are not a good idea with this small annual sample.",
     "",
     "## Output Files",
     "",
@@ -406,6 +544,9 @@ report_lines = [
     "- `outputs/final_model_coefficients.csv`",
     "- `outputs/final_model_metrics.csv`",
     "- `outputs/predictions.csv`",
+    "- `outputs/horizon_forecasts.csv`",
+    "- `outputs/scenario_forecast_path.csv`",
+    "- `outputs/model_suitability.csv`",
     "- `outputs/eda_timeseries.svg`",
     "- `outputs/actual_vs_predicted.svg`",
 ]

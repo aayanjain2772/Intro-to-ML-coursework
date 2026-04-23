@@ -237,6 +237,98 @@ if (nrow(forecastRow) == 1) {
   write.csv(forecastOutput, file.path(outputDir, "forecast_2024_25.csv"), row.names = FALSE)
 }
 
+next_year_label <- function(startYear) {
+  paste0(startYear, "-", substr(startYear + 1, 3, 4))
+}
+
+recentGoodsGrowth <- tail(stats::na.omit(railways$goods_earnings_growth), 3)
+recentFreightGrowth <- tail(stats::na.omit(railways$freight_growth), 3)
+
+goodsGrowthBaseline <- mean(recentGoodsGrowth)
+freightGrowthBaseline <- mean(recentFreightGrowth)
+goodsGrowthSd <- sd(stats::na.omit(railways$goods_earnings_growth))
+freightGrowthSd <- sd(stats::na.omit(railways$freight_growth))
+
+scenarioAssumptions <- data.frame(
+  scenario = c("baseline", "optimistic", "pessimistic"),
+  goods_growth_assumption = c(
+    goodsGrowthBaseline,
+    goodsGrowthBaseline + 0.5 * goodsGrowthSd,
+    goodsGrowthBaseline - 0.5 * goodsGrowthSd
+  ),
+  freight_growth_assumption = c(
+    freightGrowthBaseline,
+    freightGrowthBaseline + 0.5 * freightGrowthSd,
+    freightGrowthBaseline - 0.5 * freightGrowthSd
+  )
+)
+
+lastObservedGrowth <- tail(stats::na.omit(railways$real_gdp_growth_of_railways), 1)
+scenarioForecasts <- do.call(
+  rbind,
+  lapply(seq_len(nrow(scenarioAssumptions)), function(i) {
+    assumptionRow <- scenarioAssumptions[i, ]
+    directForecastRow <- railways[railways$year_label == "2024-25", ]
+    directFirstYearForecast <- as.numeric(predict(finalModel, newdata = directForecastRow))
+    prevGrowth <- directFirstYearForecast
+    out <- vector("list", 10)
+
+    for (h in seq_len(10)) {
+      predictedGrowth <- if (h == 1) {
+        directFirstYearForecast
+      } else {
+        coef(finalModel)[1] +
+          coef(finalModel)["lag_rail_gdp_growth"] * prevGrowth +
+          coef(finalModel)["lag_goods_earnings_growth"] * assumptionRow$goods_growth_assumption +
+          coef(finalModel)["lag_freight_growth"] * assumptionRow$freight_growth_assumption
+      }
+
+      forecastStartYear <- 2023 + h
+      out[[h]] <- data.frame(
+        scenario = assumptionRow$scenario,
+        horizon_years_ahead = h,
+        forecast_year = next_year_label(forecastStartYear),
+        predicted_real_gdp_growth_of_railways = as.numeric(predictedGrowth)
+      )
+      prevGrowth <- predictedGrowth
+    }
+
+    do.call(rbind, out)
+  })
+)
+
+write.csv(scenarioForecasts, file.path(outputDir, "scenario_forecast_path.csv"), row.names = FALSE)
+
+baselineForecasts <- subset(scenarioForecasts, scenario == "baseline")
+horizonForecasts <- baselineForecasts[c(1, 3, 5, 10), c("forecast_year", "predicted_real_gdp_growth_of_railways")]
+horizonForecasts$horizon <- c(
+  "short_term_1_year",
+  "medium_term_3_year",
+  "medium_term_5_year",
+  "long_run_10_year"
+)
+horizonForecasts <- horizonForecasts[, c("horizon", "forecast_year", "predicted_real_gdp_growth_of_railways")]
+write.csv(horizonForecasts, file.path(outputDir, "horizon_forecasts.csv"), row.names = FALSE)
+
+modelSuitability <- data.frame(
+  model = c(
+    "lagged_linear_regression",
+    "ridge_or_lasso",
+    "regression_tree_random_forest_boosting",
+    "knn",
+    "pcr_pls"
+  ),
+  suitable = c("yes", "maybe", "no", "no", "maybe"),
+  reason = c(
+    "Best fit for a small annual sample. Interpretable and aligned with the assignment.",
+    "Useful only as a robustness check if you try a slightly larger predictor set.",
+    "Too little data. Tree-based models would overfit and become unstable.",
+    "Weak fit for a short annual macro sample and hard to explain economically.",
+    "Could help compress many macro variables, but secondary to lagged OLS here."
+  )
+)
+write.csv(modelSuitability, file.path(outputDir, "model_suitability.csv"), row.names = FALSE)
+
 png(file.path(outputDir, "actual_vs_predicted.png"), width = 1400, height = 900, res = 160)
 plot(
   finalModelData$start_year,
@@ -299,6 +391,13 @@ reportLines <- c(
   sprintf("- Adjusted R-squared: %.3f", finalSummary$adj.r.squared),
   sprintf("- In-sample RMSE: %.3f", finalMetrics$in_sample_rmse[1]),
   "",
+  "## Forecast Horizons",
+  "",
+  sprintf("- Short term (1 year, %s): %.2f%%", horizonForecasts$forecast_year[1], horizonForecasts$predicted_real_gdp_growth_of_railways[1]),
+  sprintf("- Medium term (3 years, %s): %.2f%%", horizonForecasts$forecast_year[2], horizonForecasts$predicted_real_gdp_growth_of_railways[2]),
+  sprintf("- Medium term (5 years, %s): %.2f%%", horizonForecasts$forecast_year[3], horizonForecasts$predicted_real_gdp_growth_of_railways[3]),
+  sprintf("- Long run (10 years, %s): %.2f%%", horizonForecasts$forecast_year[4], horizonForecasts$predicted_real_gdp_growth_of_railways[4]),
+  "",
   "## Interpretation",
   "",
   "The lagged setup keeps the exercise aligned with the coursework requirement while making the prediction problem economically sensible for annual railways data. Because the sample is small, the final specification remains intentionally parsimonious.",
@@ -306,6 +405,14 @@ reportLines <- c(
   "## Forecast",
   "",
   forecastText,
+  "",
+  "Longer-horizon forecasts are generated recursively under a baseline assumption that goods-earnings growth and freight growth stay near their recent 3-year averages. Optimistic and pessimistic scenario paths are saved in `outputs/scenario_forecast_path.csv`.",
+  "",
+  "## Other Models",
+  "",
+  "- Lagged linear regression should remain the main model.",
+  "- Ridge or Lasso can be added as a robustness check if you want one extra class-friendly comparison.",
+  "- Tree-based models, KNN, and other flexible machine learning models are not a good idea with this small annual sample.",
   "",
   "## Output Files",
   "",
@@ -316,6 +423,9 @@ reportLines <- c(
   "- `outputs/final_model_coefficients.csv`",
   "- `outputs/final_model_metrics.csv`",
   "- `outputs/predictions.csv`",
+  "- `outputs/horizon_forecasts.csv`",
+  "- `outputs/scenario_forecast_path.csv`",
+  "- `outputs/model_suitability.csv`",
   "- `outputs/actual_vs_predicted.png`",
   "- `outputs/eda_timeseries.png`"
 )
