@@ -1,0 +1,9 @@
+variable,lasso_coefficient,selected
+lag_rail_gdp_growth,1.1919473005808263,yes
+lag_investment_growth,-0.0,no
+lag_goods_earnings_growth,-0.0,no
+lag_freight_growth,0.0,no
+lag_passenger_km_growth,-0.0,no
+lag_fiscal_deficit,0.0,no
+lag_real_interest_rate,0.0,no
+lag_gdp_deflator,-0.0,no

@@ -1,0 +1,2 @@
+selection_method,selected_variables,train_observations,test_observations,lasso_alpha,train_rmse,test_rmse,test_mae,r_squared_full_sample
+lasso_cv_then_ols,lag_rail_gdp_growth,13,3,0.8069639025401307,1.767105505836496,1.7049360524125934,1.5573798861472887,0.720430561718389
