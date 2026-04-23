@@ -1,0 +1,2 @@
+workflow,lasso_selected,final_predictors_used,train_observations,test_observations,train_rmse,test_rmse,test_mae
+lagged_variables_then_pca_then_ols,"lag_rail_gdp_growth, lag_operating_ratio","lag_rail_gdp_growth, lag_operating_ratio",12,3,1.6277180498323416,0.8668548825927084,0.7787799039140797

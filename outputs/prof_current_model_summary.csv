@@ -1,0 +1,2 @@
+workflow,lasso_selected,final_predictors_used,observations,r_squared,rmse
+current_variables_then_pca_then_ols,"operating_ratio, fiscal_deficit_gdp","operating_ratio, fiscal_deficit_gdp",16,0.572006968210268,2.1722166599763146
