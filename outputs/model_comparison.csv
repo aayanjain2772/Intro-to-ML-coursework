@@ -1,0 +1,5 @@
+model,observations,train_observations,test_observations,train_rmse,test_rmse,test_mae,adjusted_r_squared,aic
+demand_mix,15,12,3,1.7525,1.1321,0.8355,0.42,21.4653
+freight_investment,15,12,3,1.7492,1.5361,1.3489,0.4221,21.4199
+baseline,16,13,3,1.7671,1.7049,1.5574,0.5205,18.8029
+commercial_investment,15,12,3,1.7799,2.3596,1.9479,0.4017,21.838

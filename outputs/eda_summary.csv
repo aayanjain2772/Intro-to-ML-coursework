@@ -1,0 +1,11 @@
+variable,non_missing,mean,median,sd,min,max
+real_gdp_growth_of_railways,17,7.2109,6.0107,3.392,3.5481,13.4773
+investment_growth,17,14.3222,12.6051,4.84,4.8384,25.7947
+goods_earnings_growth,17,8.1514,9.4853,8.3202,-10.9429,22.596
+freight_growth,17,4.32,4.3185,3.5304,-1.0694,15.023
+lag_rail_gdp_growth,17,7.2109,6.0107,3.392,3.5481,13.4773
+lag_investment_growth,16,13.8899,12.5404,4.6474,4.8384,25.7947
+lag_goods_earnings_growth,16,8.5543,9.8111,8.42,-10.9429,22.596
+lag_freight_growth,16,4.4844,4.573,3.5783,-1.0694,15.023
+lag_fiscal_deficit,17,-7.9006,-7.86,1.9479,-13.17,-3.73
+lag_gdp_deflator,17,5.5824,5.2,2.4792,2.3,10.0

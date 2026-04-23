@@ -1,0 +1,2 @@
+model,observations,r_squared,adjusted_r_squared,residual_standard_error,in_sample_rmse,in_sample_mae
+demand_mix,15,0.7666,0.703,1.8728,1.6037,1.2342

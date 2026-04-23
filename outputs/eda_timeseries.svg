@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="28" text-anchor="middle" font-size="20" font-family="Arial">Railways Growth and Demand Drivers</text>
+<line x1="70" y1="370" x2="870" y2="370" stroke="#333"/>
+<line x1="70" y1="50" x2="70" y2="370" stroke="#333"/>
+<text x="22" y="210.0" text-anchor="middle" font-size="14" transform="rotate(-90,22,210.0)" font-family="Arial">Percent</text>
+<line x1="70.0" y1="370" x2="70.0" y2="376" stroke="#333"/>
+<text x="70.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2007</text>
+<line x1="120.0" y1="370" x2="120.0" y2="376" stroke="#333"/>
+<text x="120.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2008</text>
+<line x1="170.0" y1="370" x2="170.0" y2="376" stroke="#333"/>
+<text x="170.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2009</text>
+<line x1="220.0" y1="370" x2="220.0" y2="376" stroke="#333"/>
+<text x="220.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2010</text>
+<line x1="270.0" y1="370" x2="270.0" y2="376" stroke="#333"/>
+<text x="270.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2011</text>
+<line x1="320.0" y1="370" x2="320.0" y2="376" stroke="#333"/>
+<text x="320.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2012</text>
+<line x1="370.0" y1="370" x2="370.0" y2="376" stroke="#333"/>
+<text x="370.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2013</text>
+<line x1="420.0" y1="370" x2="420.0" y2="376" stroke="#333"/>
+<text x="420.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2014</text>
+<line x1="470.0" y1="370" x2="470.0" y2="376" stroke="#333"/>
+<text x="470.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2015</text>
+<line x1="520.0" y1="370" x2="520.0" y2="376" stroke="#333"/>
+<text x="520.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2016</text>
+<line x1="570.0" y1="370" x2="570.0" y2="376" stroke="#333"/>
+<text x="570.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2017</text>
+<line x1="620.0" y1="370" x2="620.0" y2="376" stroke="#333"/>
+<text x="620.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2018</text>
+<line x1="670.0" y1="370" x2="670.0" y2="376" stroke="#333"/>
+<text x="670.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2019</text>
+<line x1="720.0" y1="370" x2="720.0" y2="376" stroke="#333"/>
+<text x="720.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2020</text>
+<line x1="770.0" y1="370" x2="770.0" y2="376" stroke="#333"/>
+<text x="770.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2021</text>
+<line x1="820.0" y1="370" x2="820.0" y2="376" stroke="#333"/>
+<text x="820.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2022</text>
+<line x1="870.0" y1="370" x2="870.0" y2="376" stroke="#333"/>
+<text x="870.0" y="390" text-anchor="middle" font-size="11" font-family="Arial">2023</text>
+<line x1="65" y1="370.0" x2="70" y2="370.0" stroke="#333"/>
+<text x="60" y="374.0" text-anchor="end" font-size="11" font-family="Arial">-1.1</text>
+<line x1="70" y1="370.0" x2="870" y2="370.0" stroke="#e6e6e6"/>
+<line x1="65" y1="306.0" x2="70" y2="306.0" stroke="#333"/>
+<text x="60" y="310.0" text-anchor="end" font-size="11" font-family="Arial">4.3</text>
+<line x1="70" y1="306.0" x2="870" y2="306.0" stroke="#e6e6e6"/>
+<line x1="65" y1="242.0" x2="70" y2="242.0" stroke="#333"/>
+<text x="60" y="246.0" text-anchor="end" font-size="11" font-family="Arial">9.7</text>
+<line x1="70" y1="242.0" x2="870" y2="242.0" stroke="#e6e6e6"/>
+<line x1="65" y1="178.0" x2="70" y2="178.0" stroke="#333"/>
+<text x="60" y="182.0" text-anchor="end" font-size="11" font-family="Arial">15.0</text>
+<line x1="70" y1="178.0" x2="870" y2="178.0" stroke="#e6e6e6"/>
+<line x1="65" y1="114.0" x2="70" y2="114.0" stroke="#333"/>
+<text x="60" y="118.0" text-anchor="end" font-size="11" font-family="Arial">20.4</text>
+<line x1="70" y1="114.0" x2="870" y2="114.0" stroke="#e6e6e6"/>
+<line x1="65" y1="49.99999999999994" x2="70" y2="49.99999999999994" stroke="#333"/>
+<text x="60" y="53.99999999999994" text-anchor="end" font-size="11" font-family="Arial">25.8</text>
+<line x1="70" y1="49.99999999999994" x2="870" y2="49.99999999999994" stroke="#e6e6e6"/>
+<polyline fill="none" stroke="#1f4e79" stroke-width="2.5" points="70.0,303.41974086016717 120.0,307.7871433846638 170.0,277.87124385355264 220.0,292.48580783421204 270.0,275.74221151808183 320.0,285.6631297318605 370.0,290.7657068358561 420.0,309.59411321815804 470.0,310.2408078333961 520.0,314.9963373253849 570.0,304.309936996181 620.0,268.5404826483499 670.0,213.15570151154188 720.0,217.83416283164496 770.0,225.06481372939024 820.0,196.72249500108217 870.0,219.02698325126735"/>
+<circle cx="70.0" cy="303.41974086016717" r="3.5" fill="#1f4e79"/>
+<circle cx="120.0" cy="307.7871433846638" r="3.5" fill="#1f4e79"/>
+<circle cx="170.0" cy="277.87124385355264" r="3.5" fill="#1f4e79"/>
+<circle cx="220.0" cy="292.48580783421204" r="3.5" fill="#1f4e79"/>
+<circle cx="270.0" cy="275.74221151808183" r="3.5" fill="#1f4e79"/>
+<circle cx="320.0" cy="285.6631297318605" r="3.5" fill="#1f4e79"/>
+<circle cx="370.0" cy="290.7657068358561" r="3.5" fill="#1f4e79"/>
+<circle cx="420.0" cy="309.59411321815804" r="3.5" fill="#1f4e79"/>
+<circle cx="470.0" cy="310.2408078333961" r="3.5" fill="#1f4e79"/>
+<circle cx="520.0" cy="314.9963373253849" r="3.5" fill="#1f4e79"/>
+<circle cx="570.0" cy="304.309936996181" r="3.5" fill="#1f4e79"/>
+<circle cx="620.0" cy="268.5404826483499" r="3.5" fill="#1f4e79"/>
+<circle cx="670.0" cy="213.15570151154188" r="3.5" fill="#1f4e79"/>
+<circle cx="720.0" cy="217.83416283164496" r="3.5" fill="#1f4e79"/>
+<circle cx="770.0" cy="225.06481372939024" r="3.5" fill="#1f4e79"/>
+<circle cx="820.0" cy="196.72249500108217" r="3.5" fill="#1f4e79"/>
+<circle cx="870.0" cy="219.02698325126735" r="3.5" fill="#1f4e79"/>
+<line x1="700" y1="60" x2="722" y2="60" stroke="#1f4e79" stroke-width="2.5"/>
+<text x="730" y="64" font-size="12" font-family="Arial">Railways GDP growth</text>
+<polyline fill="none" stroke="#2e8b57" stroke-width="2.5" points="120.0,297.9946625839758 170.0,279.5070873577247 220.0,311.77672409568606 270.0,296.0026130245034 320.0,309.32378976551456 370.0,305.81972840077975 420.0,307.8450590739631 470.0,350.46586532218635 520.0,352.2443904041056 570.0,299.75615798136715 620.0,293.64274208981146 670.0,370.0 720.0,335.0533691489854 770.0,178.30993937475534 820.0,278.822714164035 870.0,294.9371801978874"/>
+<circle cx="120.0" cy="297.9946625839758" r="3.5" fill="#2e8b57"/>
+<circle cx="170.0" cy="279.5070873577247" r="3.5" fill="#2e8b57"/>
+<circle cx="220.0" cy="311.77672409568606" r="3.5" fill="#2e8b57"/>
+<circle cx="270.0" cy="296.0026130245034" r="3.5" fill="#2e8b57"/>
+<circle cx="320.0" cy="309.32378976551456" r="3.5" fill="#2e8b57"/>
+<circle cx="370.0" cy="305.81972840077975" r="3.5" fill="#2e8b57"/>
+<circle cx="420.0" cy="307.8450590739631" r="3.5" fill="#2e8b57"/>
+<circle cx="470.0" cy="350.46586532218635" r="3.5" fill="#2e8b57"/>
+<circle cx="520.0" cy="352.2443904041056" r="3.5" fill="#2e8b57"/>
+<circle cx="570.0" cy="299.75615798136715" r="3.5" fill="#2e8b57"/>
+<circle cx="620.0" cy="293.64274208981146" r="3.5" fill="#2e8b57"/>
+<circle cx="670.0" cy="370.0" r="3.5" fill="#2e8b57"/>
+<circle cx="720.0" cy="335.0533691489854" r="3.5" fill="#2e8b57"/>
+<circle cx="770.0" cy="178.30993937475534" r="3.5" fill="#2e8b57"/>
+<circle cx="820.0" cy="278.822714164035" r="3.5" fill="#2e8b57"/>
+<circle cx="870.0" cy="294.9371801978874" r="3.5" fill="#2e8b57"/>
+<line x1="700" y1="82" x2="722" y2="82" stroke="#2e8b57" stroke-width="2.5"/>
+<text x="730" y="86" font-size="12" font-family="Arial">Freight growth</text>
+<polyline fill="none" stroke="#b22222" stroke-width="2.5" points="120.0,158.29656879098675 170.0,177.64596875331262 220.0,191.37347143463074 270.0,221.49551714708406 320.0,212.05157709174313 370.0,208.9188875250681 420.0,208.6535100816357 470.0,193.02206006211065 520.0,207.1119308480208 570.0,229.43969810113424 620.0,227.83857942507956 670.0,217.06399769067468 720.0,299.6265707305747 770.0,150.283596537583 820.0,116.10642177583972 870.0,50.0"/>
+<circle cx="120.0" cy="158.29656879098675" r="3.5" fill="#b22222"/>
+<circle cx="170.0" cy="177.64596875331262" r="3.5" fill="#b22222"/>
+<circle cx="220.0" cy="191.37347143463074" r="3.5" fill="#b22222"/>
+<circle cx="270.0" cy="221.49551714708406" r="3.5" fill="#b22222"/>
+<circle cx="320.0" cy="212.05157709174313" r="3.5" fill="#b22222"/>
+<circle cx="370.0" cy="208.9188875250681" r="3.5" fill="#b22222"/>
+<circle cx="420.0" cy="208.6535100816357" r="3.5" fill="#b22222"/>
+<circle cx="470.0" cy="193.02206006211065" r="3.5" fill="#b22222"/>
+<circle cx="520.0" cy="207.1119308480208" r="3.5" fill="#b22222"/>
+<circle cx="570.0" cy="229.43969810113424" r="3.5" fill="#b22222"/>
+<circle cx="620.0" cy="227.83857942507956" r="3.5" fill="#b22222"/>
+<circle cx="670.0" cy="217.06399769067468" r="3.5" fill="#b22222"/>
+<circle cx="720.0" cy="299.6265707305747" r="3.5" fill="#b22222"/>
+<circle cx="770.0" cy="150.283596537583" r="3.5" fill="#b22222"/>
+<circle cx="820.0" cy="116.10642177583972" r="3.5" fill="#b22222"/>
+<circle cx="870.0" cy="50.0" r="3.5" fill="#b22222"/>
+<line x1="700" y1="104" x2="722" y2="104" stroke="#b22222" stroke-width="2.5"/>
+<text x="730" y="108" font-size="12" font-family="Arial">Investment growth</text>
+</svg>
